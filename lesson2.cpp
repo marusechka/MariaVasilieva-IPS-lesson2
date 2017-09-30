@@ -56,6 +56,9 @@ void ParallelSort(int *begin, int *end)
 	
 }
 
+/// Функция CompareForAndCilk_For выводит на консоль
+///время выполнения цикла for
+///время выполнения цикла cilk_for
 void CompareForAndCilk_For(size_t sz)
 {
 	std::vector<int> myVector; // мы создали пустой вектор типа int
@@ -68,17 +71,17 @@ void CompareForAndCilk_For(size_t sz)
 		myVector.push_back(rand() % 20000 + 1);
 
 	t2 = high_resolution_clock::now();
-	duration<double> duration = (t2 - t1);
+	duration<double> duration = (t2 - t1); //время выполнения цикла for
 	std::cout << "Длительность выполнения цикла for: " << duration.count() << " секунд" << std::endl;
 	
-	cilk::reducer<cilk::op_vector<int>>red_vec; //Пример объявления reducer вектора 
+	cilk::reducer<cilk::op_vector<int>>red_vec; //объявление reducer вектора 
 	t3 = high_resolution_clock::now();
 	
 	cilk_for(long i = 0; i < sz; ++i)
-		red_vec->push_back(rand() % 20000 + 1); //Пример его заполнения
+		red_vec->push_back(rand() % 20000 + 1); //заполнение reducer вектора
 
 	t4 = high_resolution_clock::now();
-	duration = (t4 - t3);
+	duration = (t4 - t3); // время выполнения cilk_for
 	std::cout << "Длительность выполнения цикла cilk_for: " << duration.count() << " секунд" << std::endl; 
 	myVector.clear();
 
